@@ -30,7 +30,7 @@ def get_sleepOnset(dataframe):
 def get_sleepdurarion(dataframe):
     for i in range(1, 2):
         is_next_row = False
-        participant_df = dataframe[(dataframe.Participant_ID == 1)]
+        participant_df = dataframe[(dataframe.Participant_ID == i)]
         print("Sleep duration Participant numebr ", i)
         for index, row in participant_df.iterrows():
             if index == 0 or is_next_row:

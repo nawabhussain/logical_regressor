@@ -1,6 +1,7 @@
 import pandas
 
 # Read in the data.
+from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 
 games = pandas.read_csv("dataset/games.csv")
@@ -52,7 +53,7 @@ plot_columns = pca_2.fit_transform(good_columns)
 # Make a scatter plot of each game, shaded according to cluster assignment.
 plt.scatter(x=plot_columns[:, 0], y=plot_columns[:, 1], c=labels)
 # Show the plot.
-# plt.show()
+plt.show()
 
 print(games.corr()["average_rating"])
 
@@ -76,7 +77,6 @@ print(train.shape)
 print(test.shape)
 
 # Import the linearregression model.
-from sklearn.linear_model import LinearRegression
 
 # Initialize the model class.
 model = LinearRegression()
@@ -91,19 +91,22 @@ predictions = model.predict(test[columns])
 
 # Compute error between our test predictions and the actual values.
 error = mean_squared_error(predictions, test[target])
-print error
+print(error)
+print ("Testing")
+print(predictions)
+print(test[target])
 
-# Import the random forest model.
-from sklearn.ensemble import RandomForestRegressor
-
-# Initialize the model with some parameters.
-model = RandomForestRegressor(n_estimators=100, min_samples_leaf=10, random_state=1)
-# Fit the model to the data.
-model.fit(train[columns], train[target])
-# Make predictions.
-predictions = model.predict(test[columns])
-# Compute the error.
-error_2 = mean_squared_error(predictions, test[target])
-print error_2
-
-model = DecisionTreeRegressor()
+# # Import the random forest model.
+# from sklearn.ensemble import RandomForestRegressor
+#
+# # Initialize the model with some parameters.
+# model = RandomForestRegressor(n_estimators=100, min_samples_leaf=10, random_state=1)
+# # Fit the model to the data.
+# model.fit(train[columns], train[target])
+# # Make predictions.
+# predictions = model.predict(test[columns])
+# # Compute the error.
+# error_2 = mean_squared_error(predictions, test[target])
+# print(error_2)
+#
+# model = DecisionTreeRegressor()

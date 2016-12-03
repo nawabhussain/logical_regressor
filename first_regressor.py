@@ -24,22 +24,22 @@ y = computeMSF(feature_df, labels_df)
 feature_df['Test_time'] = Test_time_without_sec
 feature_df = feature_df.loc[feature_df.Test_time.isin(alcoholFreeTime.values)]
 
-# feature_df['Test_time'] = Test_time_without_sec
-# feature_df = feature_df.loc[feature_df.Test_time.isin(alcoholFreeTime.values)]
-#
-# alarmFreeTime = labels_df.loc[labels_df.Alarmclock == 0].Time.apply(lambda x: x.to_pydatetime().replace(minute=0))
-# Test_time_without_sec = feature_df.Test_time.apply(lambda x: x.replace(minute=0, second=0))
-#
-# feature_df['Test_time'] = Test_time_without_sec
-# feature_df = feature_df.loc[feature_df.Test_time.isin(alarmFreeTime.values)]
-#
-# caffeineFreeTime = labels_df.loc[labels_df.Caffeine == 0].Time.apply(lambda x: x.to_pydatetime().replace(minute=0))
-# Test_time_without_sec = feature_df.Test_time.apply(lambda x: x.replace(minute=0, second=0))
-#
-# feature_df['Test_time'] = Test_time_without_sec
-# feature_df = feature_df.loc[feature_df.Test_time.isin(caffeineFreeTime.values)]
+feature_df['Test_time'] = Test_time_without_sec
+feature_df = feature_df.loc[feature_df.Test_time.isin(alcoholFreeTime.values)]
 
+alarmFreeTime = labels_df.loc[labels_df.Alarmclock == 0].Time.apply(lambda x: x.to_pydatetime().replace(minute=0))
+Test_time_without_sec = feature_df.Test_time.apply(lambda x: x.replace(minute=0, second=0))
 
+feature_df['Test_time'] = Test_time_without_sec
+feature_df = feature_df.loc[feature_df.Test_time.isin(alarmFreeTime.values)]
+
+caffeineFreeTime = labels_df.loc[labels_df.Caffeine == 0].Time.apply(lambda x: x.to_pydatetime().replace(minute=0))
+Test_time_without_sec = feature_df.Test_time.apply(lambda x: x.replace(minute=0, second=0))
+
+feature_df['Test_time'] = Test_time_without_sec
+feature_df = feature_df.loc[feature_df.Test_time.isin(caffeineFreeTime.values)]
+
+# y = computeMSF(feature_df, labels_df)
 
 # X = [[y] for y in feature_df.groupby(feature_df.Subject).positive_mean.mean().values]
 # X = [[y] for y in feature_df.groupby(feature_df.Subject).positive_median.mean().values]
@@ -61,43 +61,43 @@ predicted_set = model.predict(X_test_set)
 
 error2 = RMSe(predicted_set, y_test_set)
 
-print("Linear Regressor ", model.score(X_test_set, y_test_set))
-print(error2)
+print("LinearRegressor Score", model.score(X_test_set, y_test_set))
+print("Linear RMSE ", error2 / 3600)
 
 clf = Ridge()
 clf.fit(X_train_set, y_train_set)
 predicted = clf.predict(X_test_set)
 error3 = RMSe(predicted, y_test_set)
 print("Ridge Score ", clf.score(X_test_set, y_test_set))
-print(error3)
+print("Ridge RMSE ", error3 / 3600)
 
 clf = Lasso()
 clf.fit(X_train_set, y_train_set)
 predicted = clf.predict(X_test_set)
 error3 = RMSe(predicted, y_test_set)
 print("Lasso Score ", clf.score(X_test_set, y_test_set))
-print(error3)
+print("Lasso RMSE ", error3 / 3600)
 
 clf = ElasticNet()
 clf.fit(X_train_set, y_train_set)
 predicted = clf.predict(X_test_set)
 error3 = RMSe(predicted, y_test_set)
 print("ElasticNet Score ", clf.score(X_test_set, y_test_set))
-print(error3)
+print("ElasticNet RMSE ", error3/3600)
 
 clf = GradientBoostingRegressor()
 clf.fit(X_train_set, y_train_set)
 predicted = clf.predict(X_test_set)
 error3 = RMSe(predicted, y_test_set)
 print("GradientBoostingRegressor Score ", clf.score(X_test_set, y_test_set))
-print(error3)
+print("GradientBoostingRegressor RMSE", error3 / 3600)
 
 clf = RandomForestRegressor()
 clf.fit(X_train_set, y_train_set)
 predicted = clf.predict(X_test_set)
 error3 = RMSe(predicted, y_test_set)
 print("RandomForestRegressor Score ", clf.score(X_test_set, y_test_set))
-print(error3)
+print("RandomForestRegressor RMSE", error3 / 3600)
 
 dtrModel = DecisionTreeRegressor()
 dtrModel.fit(X_train_set, y_train_set)
@@ -107,6 +107,6 @@ adaModel = AdaBoostRegressor(DecisionTreeRegressor(), n_estimators=300, random_s
 adaModel.fit(X_train_set, y_train_set)
 
 adaPredicted = adaModel.predict(X_test_set)
-print("AdaBoostRegressor Score ", clf.score(X_test_set, y_test_set))
 error3 = RMSe(adaPredicted, y_test_set)
-print(error3)
+print("AdaBoostRegressor Score ", clf.score(X_test_set, y_test_set))
+print("AdaBoostRegressor RMSE ", error3/3600)

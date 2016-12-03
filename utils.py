@@ -164,7 +164,7 @@ def computeMSF(feature_df, labels_df):
                 "Subject_id": subject_id,
                 "MSF": MSf,
                 "MSW": MSw,
-                "MSF_final": MSF_final
+                "MSF_SC": MSF_final
             }), ignore_index=True);
 
-    return resultList.MSW
+    return resultList.MSF_SC

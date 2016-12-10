@@ -1,5 +1,5 @@
 import math
-
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
@@ -57,46 +57,46 @@ y_test_set = y[-2:]
 #
 model = LinearRegression()
 model.fit(X_train_set, y_train_set)
-predicted_set = model.predict(X_test_set)
+linearPredicted = model.predict(X_test_set)
 
-error2 = RMSe(predicted_set, y_test_set)
+error2 = RMSe(linearPredicted, y_test_set)
 
 print("LinearRegressor Score", model.score(X_test_set, y_test_set))
 print("Linear RMSE ", error2 / 3600)
 
 clf = Ridge()
 clf.fit(X_train_set, y_train_set)
-predicted = clf.predict(X_test_set)
-error3 = RMSe(predicted, y_test_set)
+ridgePredicted = clf.predict(X_test_set)
+error3 = RMSe(ridgePredicted, y_test_set)
 print("Ridge Score ", clf.score(X_test_set, y_test_set))
 print("Ridge RMSE ", error3 / 3600)
 
 clf = Lasso()
 clf.fit(X_train_set, y_train_set)
-predicted = clf.predict(X_test_set)
-error3 = RMSe(predicted, y_test_set)
+lassoPredicted = clf.predict(X_test_set)
+error3 = RMSe(lassoPredicted, y_test_set)
 print("Lasso Score ", clf.score(X_test_set, y_test_set))
 print("Lasso RMSE ", error3 / 3600)
 
-clf = ElasticNet()
-clf.fit(X_train_set, y_train_set)
-predicted = clf.predict(X_test_set)
-error3 = RMSe(predicted, y_test_set)
+elasticModel = ElasticNet()
+elasticModel.fit(X_train_set, y_train_set)
+elasticPredicted = elasticModel.predict(X_test_set)
+error3 = RMSe(elasticPredicted, y_test_set)
 print("ElasticNet Score ", clf.score(X_test_set, y_test_set))
-print("ElasticNet RMSE ", error3/3600)
+print("ElasticNet RMSE ", error3 / 3600)
 
 clf = GradientBoostingRegressor()
 clf.fit(X_train_set, y_train_set)
-predicted = clf.predict(X_test_set)
-error3 = RMSe(predicted, y_test_set)
+gbPredicted = clf.predict(X_test_set)
+error3 = RMSe(gbPredicted, y_test_set)
 print("GradientBoostingRegressor Score ", clf.score(X_test_set, y_test_set))
 print("GradientBoostingRegressor RMSE", error3 / 3600)
 
-clf = RandomForestRegressor()
-clf.fit(X_train_set, y_train_set)
-predicted = clf.predict(X_test_set)
-error3 = RMSe(predicted, y_test_set)
-print("RandomForestRegressor Score ", clf.score(X_test_set, y_test_set))
+modelRF = RandomForestRegressor()
+modelRF.fit(X_train_set, y_train_set)
+rfPredicted = modelRF.predict(X_test_set)
+error3 = RMSe(rfPredicted, y_test_set)
+print("RandomForestRegressor Score ", modelRF.score(X_test_set, y_test_set))
 print("RandomForestRegressor RMSE", error3 / 3600)
 
 dtrModel = DecisionTreeRegressor()
@@ -109,4 +109,18 @@ adaModel.fit(X_train_set, y_train_set)
 adaPredicted = adaModel.predict(X_test_set)
 error3 = RMSe(adaPredicted, y_test_set)
 print("AdaBoostRegressor Score ", clf.score(X_test_set, y_test_set))
-print("AdaBoostRegressor RMSE ", error3/3600)
+print("AdaBoostRegressor RMSE ", error3 / 3600)
+
+plt.scatter(X_test_set, y_test_set, color='black')
+
+# plt.plot(X_test_set, linearPredicted, color='blue', linewidth=3)
+# plt.plot(X_test_set, ridgePredicted, color='blue', linewidth=3)
+# plt.plot(X_test_set, lassoPredicted, color='blue', linewidth=3)
+# plt.plot(X_test_set, elasticPredicted, color='blue', linewidth=3)
+
+plt.plot(X_test_set, rfPredicted, color='orange', linewidth=3)
+
+# plt.plot(X_test_set, adaPredicted, color='purple', linewidth=3)
+# plt.plot(X_test_set, gbPredicted, color='brown', linewidth=3)
+
+plt.show()
